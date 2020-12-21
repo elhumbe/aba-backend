@@ -20,6 +20,7 @@ module.exports.policies = {
   '*': 'isAuth',
   UserController: {
     login: true,
+    create: true,
   }
 
 };
