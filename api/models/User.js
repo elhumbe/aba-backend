@@ -1,18 +1,27 @@
-var bcrypt = require("bcryptjs");
+var bcrypt = require('bcryptjs');
 
 module.exports = {
   attributes: {
     password: 'string',
     email: 'string',
+
+    roles: {
+      collection: 'rol',
+      via: 'users'
+    },
+
+    permissions: {
+      collection: 'permission',
+      via: 'users'
+    }
   },
+
   customToJSON: function() {
-    // Retourne une copie du résultat sans le mot de passe
-    return _.omit(this, ['password'])
+    return _.omit(this, ['password']);
   },
   beforeCreate: function(values, cb) {
-    // Hash le password avant chaque création
-    bcrypt.hash(values.password, 10, function(err, hash) {
-      if (err) return cb(err);
+    bcrypt.hash(values.password, 10, (err, hash) => {
+      if (err) {return cb(err);}
       values.password = hash;
       cb();
     });
